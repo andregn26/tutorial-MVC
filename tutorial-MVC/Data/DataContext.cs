@@ -13,16 +13,17 @@ namespace tutorial_MVC.Data
                 dishIngredientInstance.IngredientId
             });
             modelBuilder.Entity<DishIngredient>()
-                .HasOne(dishInstance => dishInstance.Dish)
-                .WithMany(dishIngredientInstance => dishIngredientInstance.DishIngredients)
-                .HasForeignKey(dishInstance => dishInstance.Dish);
-            modelBuilder.Entity<DishIngredient>()
-                .HasOne(dishInstance => dishInstance.Ingredient)
-                .WithMany(dishIngredientInstance => dishIngredientInstance.DishIngredients)
-                .HasForeignKey(dishInstance => dishInstance.IngredientId);
+                .HasOne(di => di.Dish)
+                .WithMany(d => d.DishIngredients)
+                .HasForeignKey(di => di.DishId);
 
-            modelBuilder.Entity<Dish>()
-                .HasData(new Dish
+
+            modelBuilder.Entity<DishIngredient>()
+                .HasOne(di => di.Ingredient)
+                .WithMany(i => i.DishIngredients)
+                .HasForeignKey(di => di.IngredientId);
+
+            modelBuilder.Entity<Dish>().HasData(new Dish
                 {
                     Id = 1,
                     Name = "Margharita",
@@ -31,7 +32,7 @@ namespace tutorial_MVC.Data
                 });
             modelBuilder.Entity<Ingredient>().HasData(
                 new Ingredient { Id = 1,Name = "Tomato Sauce"},
-                new Ingredient { Id = 1, Name = "Mozzarela" }
+                new Ingredient { Id = 2, Name = "Mozzarela" }
                 );
             modelBuilder.Entity<DishIngredient>().HasData(
                 new DishIngredient { DishId = 1, IngredientId = 1 },
